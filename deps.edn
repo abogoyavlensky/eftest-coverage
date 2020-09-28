@@ -1,5 +1,8 @@
 {:paths ["src"]
- :deps {}
+ :deps {eftest/eftest {:mvn/version "0.5.9"}
+        cloverage/cloverage {:mvn/version "1.2.1"}
+        ; using `0.4.2` for cloverage compatibility
+        org.clojure/tools.cli {:mvn/version "0.4.2"}}
  :aliases
  {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.10.1"}}}
 

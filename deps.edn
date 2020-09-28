@@ -1,0 +1,17 @@
+{:paths ["src"]
+ :deps {}
+ :aliases
+ {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.10.1"}}}
+
+  :test {:extra-paths ["test"]
+         :extra-deps {com.cognitect/test-runner
+                      {:git/url "https://github.com/cognitect-labs/test-runner"
+                       :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
+         :main-opts ["-m" "cognitect.test-runner"
+                     "-d" "test"]}
+
+  :install {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
+            :main-opts ["-m" "deps-deploy.deps-deploy" "install" "eftest-coverage.jar"]}
+
+  :deploy {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
+           :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "eftest-coverage.jar"]}}}

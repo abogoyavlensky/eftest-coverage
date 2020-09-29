@@ -89,10 +89,8 @@
 
 (def ^:private updated-default-arguments
   [["-r" "--runner"
-    ; TODO: update to actual runner name if needed!
-    "Specify which test runner to use. Default runner: `eftest`."
-    ; TODO: update to actual runner namespace!
-    :default :blog.util
+    "Specify which test runner to use. Default runner: `eftest-coverage`."
+    :default :eftest-coverage
     :parse-fn #'cov-args/parse-kw-str]])
 
 
@@ -179,36 +177,3 @@
     (if coverage?
       (cloverage/run-main opts {})
       (run-tests (first opts)))))
-
-
-; TODO: remove!
-(comment
-  (let [args ["-p" "src"
-              "-s" "test"
-              "--runner" ":blog.util"
-              "--eftest-test-warn-time" "500"
-              "--eftest-randomize-seed" "2"
-              "--eftest-multithread?" ":vars"
-              "--eftest-fail-fast?" "true"
-              "--eftest-report" "eftest.report.progress/report"]
-        opts (parse-args args)]
-    ;    eftest-arguments [["--eftest-test-warn-time"
-    ;                       "Print a warning for any test that exceeds this time (measured in milliseconds)"
-    ;                       :parse-fn #(Integer/parseInt %)]]
-    ;    cloverage-arguments (concat cov-args/arguments eftest-arguments)]
-    ;(#'cov-args/fix-opts (apply cli/cli args cloverage-arguments) {})
-    ;(select-eftest-opts)))
-    ;(first opts)))
-    ;(eftest-opts (first opts))
-    ;(with-redefs [cov-args/valid valid-with-eftest]
-    ;(-> (assoc-eftest-opts (first opts))
-    ;    :eftest-opts
-    ;    :report
-    ;    (type))
-    (report/report-to-file #'eftest.report.junit/report "target/eftest/junit.xml")))
-    ;(-> (first opts)
-    ;    keys
-    ;    first
-    ;    name)))
-    ;(-> {:a 1 :b 2 :c 3}
-    ;  (#(apply dissoc % [:a :b])))))

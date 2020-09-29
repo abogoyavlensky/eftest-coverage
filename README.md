@@ -18,6 +18,12 @@ Run the project's tests (they'll fail until you edit them):
 $ clojure -M:dev:test:runner
 ```
 
+Build a deployable jar of this library:
+
+```
+$ clojure -M:build
+```
+
 Install it locally:
 
 ```

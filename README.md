@@ -21,19 +21,19 @@ $ clojure -M:dev:test:runner
 Build a deployable jar of this library:
 
 ```
-$ clojure -M:build
+$ make build
 ```
 
 Install it locally:
 
 ```
-$ clojure -M:install
+$ make install
 ```
 
 Deploy it to Clojars -- needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` environment variables:
 
 ```
-$ clojure -M:deploy
+$ make deploy
 ```
 
 ## Inspired by

@@ -1,11 +1,11 @@
 (ns eftest-coverage.cloverage
   "Wrapper for running `cloverage` with `eftest` test runner."
   (:require [cloverage.coverage :as cov]
-            [blog.util.runner :as runner]))
+            [eftest-cloverage.runner :as runner]))
 
 ; This is based on https://github.com/circleci/circleci.test/blob/master/src/circleci/test/cloverage.clj
 
-(defmethod cov/runner-fn :blog.util
+(defmethod cov/runner-fn :eftest-cloverage
   [args]
   (fn [namespaces]
     (let [results (runner/run-tests args)]

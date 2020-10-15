@@ -9,7 +9,6 @@
             [eftest.runner :as runner]))
 
 
-(def ^:private DEFAULT-TEST-PATH "test")
 (def ^:private EFTEST-JUNIT-REPORT-FN-NAME "eftest.report.junit/report")
 
 
@@ -31,7 +30,9 @@
 
 
 (defn- resolve-str-option
-  "Resolve symbol represented as string option."
+  "Resolve symbol represented as string option.
+
+  Require according namespace when report function is junit."
   [value]
   (when (= value EFTEST-JUNIT-REPORT-FN-NAME)
     (require '[eftest.report.junit]))
@@ -159,15 +160,49 @@
       opts)))
 
 
+(defn- require-ns
+  "Require and return namespace by given string."
+  [ns-str]
+  (let [ns-sym (symbol ns-str)]
+    (require ns-sym)
+    (find-ns ns-sym)))
+
+
+(defn- find-test-namespaces
+  "Parse cloverage test paths options and return seq of testing namespaces."
+  [{:keys [test-ns-path extra-test-ns test-ns-regex] :as _opts}]
+  (if-some [test-namespaces (->> (cloverage/find-nses test-ns-path test-ns-regex)
+                                 (concat extra-test-ns)
+                                 (set)
+                                 (map require-ns)
+                                 (seq))]
+    test-namespaces
+    (throw
+      (IllegalArgumentException.
+        (str/join "\n"
+          ["Test namespaces not found."
+           "Please, setup at least one of options: `test-ns-path`, `extra-test-ns` or `test-ns-regex`."])))))
+
+
+(defn- assoc-eftest-test-namespaces
+  [opts]
+  (if-some [test-namespaces (find-test-namespaces opts)]
+    (assoc-in opts [:eftest-opts :test-namespaces] test-namespaces)
+    opts))
+
+
 (defn run-tests
   "Run eftest and parse args for options."
-  [{:keys [eftest-opts test-ns-path] :as _opts}]
-  (let [eftest-opts (or eftest-opts {})
-        test-path (if (seq test-ns-path)
-                    test-ns-path
-                    DEFAULT-TEST-PATH)
-        test-vars (runner/find-tests test-path)]
-    (runner/run-tests test-vars eftest-opts)))
+  [{:keys [eftest-opts] :as opts}]
+  (let [test-namespaces (if (seq (:test-namespaces eftest-opts))
+                          (:test-namespaces eftest-opts)
+                          ; Find namespaces when running via `lein-cloverage`
+                          (find-test-namespaces opts))
+        eftest-opts* (if (contains? eftest-opts :test-namespaces)
+                       (dissoc eftest-opts :test-namespaces)
+                      {})
+        test-vars (runner/find-tests test-namespaces)]
+    (runner/run-tests test-vars eftest-opts*)))
 
 
 (defn -main
@@ -175,7 +210,8 @@
   (let [parsed-opts (parse-args args)
         coverage? (get-in parsed-opts [0 :coverage])
         opts (update-in parsed-opts [0]
-                        (comp assoc-eftest-report-fn
+                        (comp assoc-eftest-test-namespaces
+                              assoc-eftest-report-fn
                               assoc-eftest-opts))]
     (if coverage?
       (cloverage/run-main opts {})

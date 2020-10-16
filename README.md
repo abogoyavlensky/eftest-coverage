@@ -40,7 +40,7 @@ Then run:
 clojure -M:test
 ```
 
-### Run via Cloverage (default settings for Eftest)
+### Run via Cloverage (only default settings for Eftest)
 
 Running via Cloverage you **don't have ability to configure the Eftest** runner.
 Just run Eftest with coverage as is with default settings.

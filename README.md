@@ -119,7 +119,7 @@ Also eftest-coverage has a couple extra options for convenience.
 |--eftest-report-to-file|*path to a file*|nil|Redirect Eftest reporting output to a file.|
 |--[no-]coverage|boolean flag|--coverage|Run test runner without coverage instrumenting. (enabled by default)|
 
-### Config example with some eftest options enabled
+### Config example with some eftest options
 
 *deps.edn*
 

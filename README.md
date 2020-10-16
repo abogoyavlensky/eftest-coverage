@@ -1,5 +1,7 @@
 # eftest-coverage
 
+[![Clojars Project](https://img.shields.io/clojars/v/abogoyavlensky/eftest-coverage.svg)](https://clojars.org/abogoyavlensky/eftest-coverage)
+
 A tiny wrapper around [Eftest](https://github.com/weavejester/eftest) Clojure test runner
 for getting test coverage using [Cloverage](https://github.com/cloverage/cloverage) instrumentation.
 

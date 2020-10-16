@@ -119,6 +119,25 @@ Also eftest-coverage has a couple extra options for convenience.
 |--eftest-report-to-file|*path to a file*|nil|Redirect Eftest reporting output to a file.|
 |--[no-]coverage|boolean flag|--coverage|Run test runner without coverage instrumenting. (enabled by default)|
 
+### Config example with some eftest options enabled
+
+*deps.edn*
+
+```clojure
+{...
+ :aliases {:test
+           {:extra-paths ["test"]
+            :extra-deps {abogoyavlensky/eftest-coverage {:mvn/version "VERSION"}}
+            :main-opts   ["-m" "eftest-coverage.runner"
+                          "-p" "src"
+                          "-s" "test"
+                          "--eftest-test-warn-time" "100"
+                          "--eftest-multithread?" "false"
+                          "--eftest-fail-fast?" "true"
+                          "--eftest-report" "eftest.report.junit/report"
+                          "--eftest-report-to-file" "target/eftest/junit.xml"]}}}
+```
+
 ## Development
 
 Build a deployable jar of this library:

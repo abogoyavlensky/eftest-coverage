@@ -111,7 +111,7 @@ All options for Eftest are available
 to have full compatibility with origin library.*
 
 
-### efest-coverage extra options
+### eftest-coverage extra options
 Also eftest-coverage has a couple extra options for convenience.
 
 |Option|Value|Default|Description|

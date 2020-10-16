@@ -1,5 +1,3 @@
-TODO: update first changelog record with date and link to git tag!
-
-## 0.1.0 - 2020-09-28
+## 0.1.0 - 2020-10-16
 ### Added
 - Initial release

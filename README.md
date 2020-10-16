@@ -105,7 +105,7 @@ All options for Eftest are available
 |--eftest-test-warn-time|*int time in milliseconds*|nil|
 
 
-:information_source: *Keep Eftest's semantic of boolean options with `?` sign at the end
+:information_source: *Keeping Eftest's semantic of boolean options with `?` sign at the end
 to have full compatibility with origin library.*
 
 

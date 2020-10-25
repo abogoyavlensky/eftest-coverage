@@ -1,0 +1,4 @@
+{:missing-docstring {:level :warning}
+ :unsorted-required-namespaces {:level :warning}
+ :single-key-in {:level :warning}
+ :shadowed-var {:level :warning}}

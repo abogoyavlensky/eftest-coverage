@@ -7,6 +7,8 @@ INFO := @sh -c '\
     printf $(NC)' VALUE
 
 
+DIRS?=src test
+
 .SILENT:  # Ignore output of make `echo` command
 
 
@@ -34,3 +36,27 @@ deploy:
 	@$(MAKE) build
 	@$(INFO) "Deploying jar to Clojars..."
 	@clojure -M:deploy
+
+
+.PHONY: fmt-check  # Checking code formatting
+fmt-check:
+	@$(INFO) "Checking code formatting..."
+	@cljstyle check --report $(DIRS)
+
+
+.PHONY: fmt  # Fixing code formatting
+fmt:
+	@$(INFO) "Fixing code formatting..."
+	@cljstyle fix --report $(DIRS)
+
+
+.PHONY: lint  # Linting code
+lint:
+	@$(INFO) "Linting project..."
+	@clj-kondo --config .clj-kondo/config-ci.edn --lint $(DIRS)
+
+
+.PHONY: lint-init  # Linting code with libraries, could be used in CI
+lint-init:
+	@$(INFO) "Linting project's classpath..."
+	@clj-kondo --config .clj-kondo/config-ci.edn --lint $(shell clj -Spath)

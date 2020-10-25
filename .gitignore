@@ -13,3 +13,4 @@
 .idea/
 lsp/
 .clj-kondo/.cache
+*.iml

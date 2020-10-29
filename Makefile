@@ -43,6 +43,7 @@ deploy:
 	@$(INFO) "Deploying jar to Clojars..."
 	@clojure -M:deploy
 
+# TODO: remove cmd repition!
 
 .PHONY: fmt-check  # Checking code formatting
 fmt-check:
@@ -78,3 +79,9 @@ lint-init:
 lint-init-ci:
 	@$(INFO) "Linting project's classpath..."
 	@LINT_PATHS=$(shell clj -Spath) docker-compose run lint || true
+
+
+.PHONY: test  # Run tests with coverage
+test:
+	@$(INFO) "Running tests..."
+	@clojure -M:dev:test

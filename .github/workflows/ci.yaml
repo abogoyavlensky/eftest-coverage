@@ -27,11 +27,11 @@ jobs:
 
       - name: Lint
         run: |
-          make lint-init
-          make lint
+          make lint-init-ci
+          docker-compose run lint
 
       - name: Fmt
-        run: make fmt-check
+        run: make fmt-check-ci
 
       - name: Test
-        run: make test-ci
+        run: make test

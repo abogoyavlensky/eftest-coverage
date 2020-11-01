@@ -70,7 +70,7 @@ clojure -M:test
 ```
 {...
  [[abogoyavlensky/eftest-coverage "VERSION"]]
- :plugins [[lein-cloverage "1.1.2"]]
+ :plugins [[lein-cloverage "1.2.1"]]
  ...
 }
 ```

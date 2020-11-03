@@ -5,18 +5,20 @@
 A tiny wrapper around [Eftest](https://github.com/weavejester/eftest) Clojure test runner
 for getting test coverage using [Cloverage](https://github.com/cloverage/cloverage) instrumentation.
 
+__*DISCLAIMER: probably you should use a [native way](https://github.com/cloverage/cloverage/pull/315) to run Cloverage with Eftest instead of this lib.*__
+
 ## Installation
 
 *project.clj :dependencies*
 
 ```clojure
-[abogoyavlensky/eftest-coverage "0.1.0"]
+[abogoyavlensky/eftest-coverage "0.1.1"]
 ```
 
 *deps.edn :deps*
 
 ```clojure
-abogoyavlensky/eftest-coverage {:mvn/version "0.1.0"}
+abogoyavlensky/eftest-coverage {:mvn/version "0.1.1"}
 ```
 
 ## Usage examples
@@ -70,7 +72,7 @@ clojure -M:test
 ```
 {...
  [[abogoyavlensky/eftest-coverage "VERSION"]]
- :plugins [[lein-cloverage "1.1.2"]]
+ :plugins [[lein-cloverage "1.2.1"]]
  ...
 }
 ```
@@ -166,8 +168,8 @@ $ make deploy
 
 ## Roadmap
 
-- [ ] Add ability to use -X option of Clojure CLI.
-- [ ] Add lein-eftest-coverage plugin with ability to configure Eftest runner.
+- [x] Add ability to use -X option of Clojure CLI.
+- [x] ~~Add lein-eftest-coverage plugin with ability to configure Eftest runner.~~ Use cloverage/run-project instead.
 - [ ] Add ability to configure `:only` and metadata selectors for particular tests.
 
 ## License

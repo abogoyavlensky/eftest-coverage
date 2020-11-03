@@ -10,6 +10,7 @@
 .hgignore
 .hg/
 .vscode/
-.IDEA/
+.idea/
 lsp/
 .clj-kondo/.cache
+*.iml

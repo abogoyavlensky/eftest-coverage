@@ -188,7 +188,7 @@
   "Run eftest and parse args for options."
   [{:keys [eftest-opts] :as opts}]
   (let [eftest-opts* (if (and (seq eftest-opts)
-                              (not (map? eftest-opts)))
+                           (not (map? eftest-opts)))
                        (into {} eftest-opts)
                        eftest-opts)
         test-namespaces (find-test-namespaces opts)
@@ -222,8 +222,8 @@
   (let [parsed-opts (parse-args args)
         coverage? (get-in parsed-opts [0 :coverage])
         opts (update-in parsed-opts [0]
-                        (comp assoc-eftest-report-fn
-                              assoc-eftest-opts))]
+               (comp assoc-eftest-report-fn
+                 assoc-eftest-opts))]
     (if coverage?
       (cloverage/run-main opts {})
       (run-tests (first opts)))))

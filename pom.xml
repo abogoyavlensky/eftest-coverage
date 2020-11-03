@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>abogoyavlensky</groupId>
   <artifactId>eftest-coverage</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <name>eftest-coverage</name>
   <description>Test coverage for Eftest Clojure test runner using Cloverage.</description>
   <url>https://github.com/abogoyavlensky/eftest-coverage</url>

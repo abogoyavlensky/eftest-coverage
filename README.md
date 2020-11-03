@@ -12,13 +12,13 @@ __*DISCLAIMER: probably you should use a [native way](https://github.com/clovera
 *project.clj :dependencies*
 
 ```clojure
-[abogoyavlensky/eftest-coverage "0.1.0"]
+[abogoyavlensky/eftest-coverage "0.1.1"]
 ```
 
 *deps.edn :deps*
 
 ```clojure
-abogoyavlensky/eftest-coverage {:mvn/version "0.1.0"}
+abogoyavlensky/eftest-coverage {:mvn/version "0.1.1"}
 ```
 
 ## Usage examples

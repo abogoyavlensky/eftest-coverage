@@ -5,7 +5,7 @@
 A tiny wrapper around [Eftest](https://github.com/weavejester/eftest) Clojure test runner
 for getting test coverage using [Cloverage](https://github.com/cloverage/cloverage) instrumentation.
 
-__*DISCLAMER: probably you should use a [native way](https://github.com/cloverage/cloverage/pull/315) to run Cloverage with Eftest instead of this lib.*__
+__*DISCLAIMER: probably you should use a [native way](https://github.com/cloverage/cloverage/pull/315) to run Cloverage with Eftest instead of this lib.*__
 
 ## Installation
 

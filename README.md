@@ -168,8 +168,8 @@ $ make deploy
 
 ## Roadmap
 
-- [ ] Add ability to use -X option of Clojure CLI.
-- [ ] Add lein-eftest-coverage plugin with ability to configure Eftest runner.
+- [x] Add ability to use -X option of Clojure CLI.
+- [x] ~~Add lein-eftest-coverage plugin with ability to configure Eftest runner.~~ Use cloverage/run-project instead.
 - [ ] Add ability to configure `:only` and metadata selectors for particular tests.
 
 ## License

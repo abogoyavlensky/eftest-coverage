@@ -184,61 +184,46 @@
            "Please, setup at least one of options: `test-ns-path`, `extra-test-ns` or `test-ns-regex`."])))))
 
 
-; TODO: remove
-(defn- assoc-eftest-test-namespaces
-  [opts]
-  (if-some [test-namespaces (find-test-namespaces opts)]
-    (assoc-in opts [:eftest-opts :test-namespaces] test-namespaces)
-    opts))
-
-
 (defn run-tests
   "Run eftest and parse args for options."
   [{:keys [eftest-opts] :as opts}]
-  (let [eftest-opts-map (if (and (seq eftest-opts)
-                                 (not (map? eftest-opts)))
-                          (into {} eftest-opts)
-                          eftest-opts)
-        test-namespaces (if (seq (:test-namespaces eftest-opts-map))
-                          (:test-namespaces eftest-opts-map)
-                          ; Find namespaces when running via `lein-cloverage`
-                          (find-test-namespaces opts))
-        eftest-opts* (if (contains? eftest-opts-map :test-namespaces)
-                       (dissoc eftest-opts-map :test-namespaces)
-                       eftest-opts-map)
+  (let [eftest-opts* (if (and (seq eftest-opts)
+                              (not (map? eftest-opts)))
+                       (into {} eftest-opts)
+                       eftest-opts)
+        test-namespaces (find-test-namespaces opts)
         test-vars (runner/find-tests test-namespaces)]
     (runner/run-tests test-vars eftest-opts*)))
 
 
-(def valid-cloverage-args
+(def ^:private valid-cloverage-args
   (merge
     cov-args/valid
     {:eftest-opts map?}))
 
 
+(defn exec
+  "Run eftest-coverage using -X options of tools.deps."
+  [opts]
+  (let [opts* (cond-> (assoc-eftest-report-fn opts)
+                (not (contains? opts :runner)) (assoc :runner :eftest-coverage))
+        coverage? (if (nil? (:coverage opts*))
+                    true
+                    (:coverage opts*))]
+    ; TODO: fix overriding `:report` function
+    (with-redefs [cov-args/valid valid-cloverage-args]
+      (if coverage?
+        (cloverage/run-project opts*)
+        (run-tests (:eftest-opts opts*))))))
+
+
 (defn -main
   [& args]
-  (let [;parsed-opts (parse-args args)
-        ;coverage? (get-in parsed-opts [0 :coverage])
-        project-opts {:eftest-opts {:test-warn-time 100}}]
-        ;opts (update-in parsed-opts [0]
-        ;       (comp assoc-eftest-test-namespaces
-        ;         assoc-eftest-report-fn
-        ;         assoc-eftest-opts))]
-    (with-redefs [cov-args/valid valid-cloverage-args]
-      (-> args
-          (cov-args/parse-args project-opts)
-          (cloverage/run-main project-opts)))))
-        ;(if coverage?
-        ;  ;(cloverage/run-main opts {:eftest-opts {:test-warn-time 10} :TEST-VAR 1})
-        ;  ;(cloverage/run-project parsed-opts {:eftest-opts {:test-warn-time 10} :TEST-VAR 1})
-        ;  (cloverage/run-project parsed-opts {:TEST-VAR 1}))))
-        ;  ;(run-tests (first opts)))))
-
-
-; TODO: remove
-(comment
-  (let [project-opts {:eftest-opts {:test-warn-time 100}}
-        opts {}]
-    (#'cov-args/overwrite opts project-opts)))
-    ;(into {} '([:report true] [:test-warn-time 100]))))
+  (let [parsed-opts (parse-args args)
+        coverage? (get-in parsed-opts [0 :coverage])
+        opts (update-in parsed-opts [0]
+                        (comp assoc-eftest-report-fn
+                              assoc-eftest-opts))]
+    (if coverage?
+      (cloverage/run-main opts {})
+      (run-tests (first opts)))))

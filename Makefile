@@ -43,6 +43,10 @@ deploy:
 	@$(INFO) "Deploying jar to Clojars..."
 	@clojure -M:deploy
 
+.PHONY: slim  # Slim build and deploy
+slim-snapshot:
+	@clojure -T:slim deploy :snapshot true
+
 # TODO: remove cmd repition!
 
 .PHONY: fmt-check  # Checking code formatting

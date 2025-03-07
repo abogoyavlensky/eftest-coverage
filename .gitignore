@@ -14,3 +14,4 @@
 lsp/
 .clj-kondo/.cache
 *.iml
+.lsp/

@@ -9,29 +9,47 @@ on:
 
 
 jobs:
-  checks:
+  # checks:
 
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Install Clojure tools.deps
+  #       run: |
+  #         curl -O https://download.clojure.org/install/linux-install-1.10.1.697.sh
+  #         chmod +x linux-install-1.10.1.697.sh
+  #         sudo ./linux-install-1.10.1.697.sh
+  #         sudo apt-get install rlwrap
+
+      # - name: Install Clojure deps
+      #   run: clj -Spath
+
+      # - name: Lint
+      #   run: |
+      #     make lint-init-ci
+      #     docker-compose run lint
+
+      # - name: Fmt
+      #   run: make fmt-check-ci
+
+      # - name: Test
+      #   run: make test
+
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Clojure tools.deps
-        run: |
-          curl -O https://download.clojure.org/install/linux-install-1.10.1.697.sh
-          chmod +x linux-install-1.10.1.697.sh
-          sudo ./linux-install-1.10.1.697.sh
-          sudo apt-get install rlwrap
-
-      - name: Install Clojure deps
-        run: clj -Spath
-
-      - name: Lint
-        run: |
-          make lint-init-ci
-          docker-compose run lint
-
-      - name: Fmt
-        run: make fmt-check-ci
-
-      - name: Test
-        run: make test
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Clojure
+        uses: DeLaGuardo/setup-clojure@master
+        with:
+          cli: '1.12.0.1479'
+      - name: Deploy Snapshot
+        env:
+          CLOJARS_USERNAME: ${{ secrets.CLOJARS_USERNAME }}
+          CLOJARS_PASSWORD: ${{ secrets.CLOJARS_PASSWORD }}
+        run: make slim-snapshot

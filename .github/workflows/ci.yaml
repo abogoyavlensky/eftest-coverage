@@ -48,6 +48,20 @@ jobs:
         uses: DeLaGuardo/setup-clojure@master
         with:
           cli: '1.12.0.1479'
+      - name: Setup Maven settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << EOF
+          <settings>
+            <servers>
+              <server>
+                <id>clojars</id>
+                <username>${{ secrets.CLOJARS_USERNAME }}</username>
+                <password>${{ secrets.CLOJARS_PASSWORD }}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
       - name: Deploy Snapshot
         env:
           CLOJARS_USERNAME: ${{ secrets.CLOJARS_USERNAME }}

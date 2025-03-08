@@ -26,7 +26,7 @@
   :slim {:deps {io.github.abogoyavlensky/slim {:mvn/version "0.2.2"}
                 slipset/deps-deploy {:mvn/version "0.2.2"}}
          :ns-default slim.lib
-         :exec-args {:version "0.1.7"
+         :exec-args {:version "0.1.8"
                      :lib abogoyavlensky/eftest-coverage
                      :url "https://github.com/abogoyavlensky/eftest-coverage"
                      :description "Test coverage for Eftest Clojure test runner using Cloverage."

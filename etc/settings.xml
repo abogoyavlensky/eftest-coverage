@@ -1,0 +1,9 @@
+<settings>
+  <servers>
+    <server>
+      <id>clojars</id>
+      <username>${CLOJARS_USERNAME}</username>
+      <password>${CLOJARS_PASSWORD}</password>
+    </server>
+  </servers>
+</settings>

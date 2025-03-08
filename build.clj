@@ -3,7 +3,7 @@
             [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'abogoyavlensky/eftest-coverage)
-(def VERSION "0.1.11-SNAPSHOT")
+(def VERSION "0.1.12-SNAPSHOT")
 (def class-dir "target/classes")
 
 

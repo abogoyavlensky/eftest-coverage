@@ -1,16 +1,27 @@
-version: "3.8"
-
 services:
-  lint:
-    image: borkdude/clj-kondo:2020.10.10
-    command: clj-kondo --config .clj-kondo/config-ci.edn --lint ${LINT_PATHS:-src test}
-    working_dir: /app
+  deploy:
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    # command: make slim-snapshot
+    command: clojure -T:b deploy
+    environment:
+      - CLOJARS_USERNAME
+      - CLOJARS_PASSWORD
     volumes:
       - .:/app
-      - ${HOME}/.m2:${HOME}/.m2
 
-  fmt:
-    image: abogoyavlensky/cljstyle:0.13.0
-    command: cljstyle ${FMT_ACTION:-check} --report ${FMT_PATHS:-src test}
-    volumes:
-      - .:/app
+
+  # lint:
+  #   image: borkdude/clj-kondo:2020.10.10
+  #   command: clj-kondo --config .clj-kondo/config-ci.edn --lint ${LINT_PATHS:-src test}
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app
+  #     - ${HOME}/.m2:${HOME}/.m2
+
+  # fmt:
+  #   image: abogoyavlensky/cljstyle:0.13.0
+  #   command: cljstyle ${FMT_ACTION:-check} --report ${FMT_PATHS:-src test}
+  #   volumes:
+  #     - .:/app

@@ -22,11 +22,15 @@
   :deploy {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
            :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "eftest-coverage.jar"]}
 
+  :b {:deps {io.github.clojure/tools.build {:git/tag "v0.9.4" :git/sha "76b78fe"}
+             slipset/deps-deploy {:mvn/version "0.2.1"}}
+      :ns-default build}
+
   ; One more time
   :slim {:deps {io.github.abogoyavlensky/slim {:mvn/version "0.2.2"}
                 slipset/deps-deploy {:mvn/version "0.2.2"}}
          :ns-default slim.lib
-         :exec-args {:version "0.1.8"
+         :exec-args {:version "0.1.10"
                      :lib abogoyavlensky/eftest-coverage
                      :url "https://github.com/abogoyavlensky/eftest-coverage"
                      :description "Test coverage for Eftest Clojure test runner using Cloverage."

@@ -21,7 +21,8 @@
 
   :deploy {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
            :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "eftest-coverage.jar"]}
-  
+           
+  ; One more time
   :slim {:deps {io.github.abogoyavlensky/slim {:mvn/version "0.2.2"}
                 slipset/deps-deploy {:mvn/version "0.2.2"}}
          :ns-default slim.lib

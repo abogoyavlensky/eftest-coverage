@@ -43,6 +43,8 @@ jobs:
     #   CLOJARS_USERNAME: ${{ secrets.CLOJARS_USERNAME }}
     #   CLOJARS_PASSWORD: ${{ secrets.CLOJARS_PASSWORD }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     # container:
     #  image: clojure:temurin-21-tools-deps-1.12.0.1479-jammy
     steps:
@@ -97,3 +99,12 @@ jobs:
           CLOJARS_PASSWORD: ${{ secrets.CLOJARS_PASSWORD }}
         # run: make slim-snapshot
         run: clojure -T:b deploy
+      - name: Publish GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${TAG}" \
+              --generate-notes

@@ -27,10 +27,11 @@
       :ns-default build}
 
   ; One more time
-  :slim {:deps {io.github.abogoyavlensky/slim {:mvn/version "0.2.2"}
+  :slim {:deps {io.github.abogoyavlensky/slim {:local/root "../slim"}
                 slipset/deps-deploy {:mvn/version "0.2.2"}}
          :ns-default slim.lib
-         :exec-args {:version "0.1.12"
+         :exec-args {:version-file "VERSION"
+                     ;:version "0.1.{{git-count-revs}}"
                      :lib abogoyavlensky/eftest-coverage
                      :url "https://github.com/abogoyavlensky/eftest-coverage"
                      :description "Test coverage for Eftest Clojure test runner using Cloverage."

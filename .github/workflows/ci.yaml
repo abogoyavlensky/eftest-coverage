@@ -2,8 +2,9 @@ name: CI
 
 
 on:
-  tags:
-    - "*"
+  push:
+    tags:
+      - "*"
   # push:
   #   branches: [ master ]
   # pull_request:
